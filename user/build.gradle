@@ -1,0 +1,2 @@
+
+println "${project.parent.name} / ${project.name} 이거 되는거 맞냐"
