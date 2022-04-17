@@ -2,8 +2,8 @@ HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!app/user/src/main/**/build/
-!app/user/src/test/**/build/
+!web/user/src/main/**/build/
+!web/user/src/test/**/build/
 
 ### STS ###
 .apt_generated
@@ -14,8 +14,8 @@ build/
 .springBeans
 .sts4-cache
 bin/
-!app/user/src/main/**/bin/
-!app/user/src/test/**/bin/
+!web/user/src/main/**/bin/
+!web/user/src/test/**/bin/
 
 /test/resources/application.preperties
 application.properties
@@ -26,8 +26,8 @@ application.properties
 *.iml
 *.ipr
 out/
-!app/user/src/main/**/out/
-!app/user/src/test/**/out/
+!web/user/src/main/**/out/
+!web/user/src/test/**/out/
 
 ### NetBeans ###
 /nbproject/private/

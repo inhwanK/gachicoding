@@ -13,7 +13,7 @@ dependencies {
 """
 
 
-["common", "app", "service", "model", "infra"].forEach(moduleName -> {
+["common", "web", "domain", "service"].forEach(moduleName -> {
     def moduleDir = file(rootDir, moduleName);
     if (!moduleDir.exists()) {
         moduleDir.mkdirs()
