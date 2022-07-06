@@ -67,6 +67,7 @@
 * [사용자 인증을 위한 메일 API 개발 과정](https://bool-flower.tistory.com/19)
   <br>
 
+test
 [//]: # (## 주요 이슈 및 트러블슈팅)
 
 [//]: # (* Spring Data JPA - [DynamicInsert,DynamicUpdate 어노테이션의 용도&#40;작성 전&#41;]&#40;&#41;)
