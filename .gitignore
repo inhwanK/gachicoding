@@ -16,6 +16,9 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+
+/test/resources/application.properties
+/main/resources/tempImg
 application.properties
 
 ### IntelliJ IDEA ###

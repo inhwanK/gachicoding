@@ -21,49 +21,67 @@ import java.time.LocalDateTime;
 @Table(name = "gachi_a")
 public class Answer {
     @Id
+    @Column(name = "as_idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long aIdx;
+    private Long ansIdx;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     @JsonManagedReference
-    private User user;
+    private User writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "q_idx")
+    @JoinColumn(name = "qs_idx")
     @JsonManagedReference
     private Question question;
 
-    private String aContent;
-    private boolean aSelect;
-    private boolean aActivated;
-    private LocalDateTime aRegdate;
+    @Column(name = "as_content")
+    private String ansContent;
+
+    @Column(name = "as_select")
+    private Boolean ansSelect;
+
+    @Column(name = "as_activated")
+    private Boolean ansActivated;
+
+    @Column(name = "as_regdate")
+    private LocalDateTime ansRegdate;
 
     @Builder
-    public Answer(User user, Question question, String aContent, boolean aSelect, boolean aActivated, LocalDateTime aRegdate) {
-        this.user = user;
+    public Answer(User writer, Question question, String ansContent, Boolean ansSelect, Boolean ansActivated, LocalDateTime ansRegdate) {
+        this.writer = writer;
         this.question = question;
-        this.aContent = aContent;
-        this.aSelect = aSelect;
-        this.aActivated = aActivated;
-        this.aRegdate = aRegdate;
+        this.ansContent = ansContent;
+        this.ansSelect = ansSelect;
+        this.ansActivated = ansActivated;
+        this.ansRegdate = ansRegdate;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User writer) {
+        this.writer = writer;
     }
 
     public void setQuestion(Question question) {
         this.question = question;
     }
 
-    public Answer update(String aContent) {
-        this.aContent = aContent;
+    public Answer update(String ansContent) {
+        this.ansContent = ansContent;
         return this;
     }
 
-    public Answer delete() {
-        this.aActivated = false;
+    public Answer toSelect() {
+        this.ansSelect = true;
+        return this;
+    }
+
+    public Answer disableAnswer() {
+        this.ansActivated = false;
+        return this;
+    }
+
+    public Answer enableAnswer() {
+        this.ansActivated = true;
         return this;
     }
 }

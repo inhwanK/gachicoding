@@ -25,8 +25,8 @@ public class Notice {
     private String notTitle;
     private String notContent;
     private int notViews;
-    private boolean notPin;
-    private boolean notActivated;
+    private Boolean notPin;
+    private Boolean notActivated;
     private LocalDateTime notRegdate;
 
     // FetchType.EAGER 즉시 로딩
@@ -38,11 +38,11 @@ public class Notice {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     @JsonManagedReference
-    private User user;
+    private User writer;
 
     @Builder
-    public Notice(User user, String notTitle, String notContent, int notViews, boolean notPin, boolean notActivated, LocalDateTime notRegdate) {
-        this.user = user;
+    public Notice(User writer, String notTitle, String notContent, int notViews, Boolean notPin, Boolean notActivated, LocalDateTime notRegdate) {
+        this.writer = writer;
         this.notTitle = notTitle;
         this.notContent = notContent;
         this.notViews = notViews;
@@ -52,18 +52,22 @@ public class Notice {
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.writer = writer;
     }
 
-    public Notice update(String notTitle, String notContent, boolean notPin) {
+    public Notice update(String notTitle, String notContent) {
         this.notTitle = notTitle;
         this.notContent = notContent;
-        this.notPin = notPin;
         return this;
     }
 
-    public Notice delete() {
+    public Notice disableNotice() {
         this.notActivated = false;
+        return this;
+    }
+
+    public Notice enableNotice() {
+        this.notActivated = true;
         return this;
     }
 }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.deco.gachicoding.domain.answer.Answer;
 import org.deco.gachicoding.domain.user.User;
+import org.deco.gachicoding.dto.question.QuestionUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -24,53 +25,92 @@ import java.util.List;
 @Table(name = "gachi_q")
 public class Question {
     @Id
+    @Column(name = "qs_idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long qIdx;
+    private Long queIdx;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_idx")
     @JsonManagedReference
-    private User user;
+    private User writer;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "q_idx", insertable = false, updatable = false)
+    @JoinColumn(name = "qs_idx", insertable = false, updatable = false)
     @JsonBackReference
     private List<Answer> answers = new ArrayList<>();
 
-    private String qTitle;
-    private String qContent;
-    private String qError;
-    private String qCategory;
-    private boolean qSolve;
-    private boolean qActivated;
-    private LocalDateTime qRegdate;
+    @Column(name = "qs_title")
+    private String queTitle;
+
+    @Column(name = "qs_content")
+    private String queContent;
+
+    @Column(name = "qs_error")
+    private String queError;
+
+    @Column(name = "qs_category")
+    private String queCategory;
+
+    @Column(name = "qs_solve")
+    private Boolean queSolve;
+
+    @Column(name = "qs_activated")
+    private Boolean queActivated;
+
+    @Column(name = "qs_regdate")
+    private LocalDateTime queRegdate;
 
     @Builder
-    public Question(User user, String qTitle, String qContent, String qError, String qCategory, boolean qSolve, boolean qActivated, LocalDateTime qRegdate) {
-        this.user = user;
-        this.qTitle = qTitle;
-        this.qContent = qContent;
-        this.qError = qError;
-        this.qCategory = qCategory;
-        this.qSolve = qSolve;
-        this.qActivated = qActivated;
-        this.qRegdate = qRegdate;
+    public Question(User writer, Long queIdx, String queTitle, String queContent, String queError, String queCategory, Boolean queSolve, Boolean queActivated, LocalDateTime queRegdate) {
+        this.writer = writer;
+        this.queIdx = queIdx;
+        this.queTitle = queTitle;
+        this.queContent = queContent;
+        this.queError = queError;
+        this.queCategory = queCategory;
+        this.queSolve = queSolve;
+        this.queActivated = queActivated;
+        this.queRegdate = queRegdate;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        this.writer = user;
     }
 
-    public Question update(String qTitle, String qContent, String qError, String qCategory) {
-        this.qTitle = qTitle;
-        this.qContent = qContent;
-        this.qError = qError;
-        this.qCategory = qCategory;
+    public void setAnswers(Answer answer) {
+        this.answers.add(answer);
+    }
+
+    public Question update(QuestionUpdateRequestDto dto) {
+        this.queTitle = dto.getQueTitle();
+        this.queContent = dto.getQueContent();
+        this.queError = dto.getQueError();
+        this.queCategory = dto.getQueCategory();
         return this;
     }
 
-    public Question delete() {
-        this.qActivated = false;
+    public Question toSolve() {
+        this.queSolve = true;
+        return this;
+    }
+
+    public Question isDisable() {
+        this.queActivated = false;
+        return this;
+    }
+
+    public Question isEnable() {
+        this.queActivated = true;
+        return this;
+    }
+
+    public Question updateContent(String queContent) {
+        this.queContent = queContent;
+        return this;
+    }
+
+    public Question updateError(String queError) {
+        this.queError = queError;
         return this;
     }
 
